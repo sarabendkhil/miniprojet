@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="template">
+<link rel="stylesheet" type="text/css" href="/webjars/bootstrap/4.3.1/css/bootstrap.min.css" />
+
+<head>
+	<meta charset="utf-8">
+	<title>Liste des Films</title>
+</head>
+
+<body>
+	<div layout:fragment="Mycontent">
+		<div class="container mt-5">
+			<div class="card">
+				<div class="card-header">
+					Liste des Films
+				</div>
+				<div class="card-body">
+				
+				
+	<form th:action="@{/chercherGenre}" method="get">
+						<div class="mb-3 ">
+							
+								<label class="control-label" style="color:rgb(0, 128, 0); "><b>Genre :</b></label> 
+								<div class="row">
+								<select name="g" class="form-control"  style="width:322px;">
+									<option th:each="s:${genres}" th:value="${s.idGenre}" th:text="${s.nomGenre}"></option>
+								</select>
+									 &nbsp;   
+							
+							<input style="height:40px;" type="submit" class="btn btn-primary" value="Chercher">
+								</div>
+						</div>
+					</form>
+				
+			<form th:action="@{chercherNom}" method="get">
+						<label style="color:rgb(0, 128, 0);"><b>Chercher Musique : </b></lbabel>
+						<input type="text" name="nomF" th:value="${nomFilm}" />
+						<button class="btn btn-primary">Chercher</button>
+		    </form>
+		    <br>
+	
+					 <br> <br>
+					<table class="table table-striped">
+						<tr>
+							<th>ID</th>
+							<th>Nom Musique</th>
+							<th>Duree</th>
+							<th>Date Creation</th>
+							<th>Genre</th>
+						</tr>
+						<tr th:each="m:${musiques.content}">
+							<td th:text="${m.idMusique}"></td>
+							<td th:text="${m.nomMusique}"></td>
+							<td th:text="${m.dureeMusique}"></td>
+							<td th:text="${m.dateSortie}"></td>
+							<td th:text="${m.genre.nomGenre}"></td>
+
+							<td sec:authorize="hasRole('ADMIN')"><a class="btn btn-success" th:href="@{modifierMusique(id=${m.idMusique})}">Editer</a></td>
+							<td sec:authorize="hasRole('ADMIN')"><a class="btn btn-danger" onclick="return confirm('Etes-vous sûr ?')" th:href="@{supprimerMusique(id=${m.idMusique},
+page=${currentPage},size=${size})}">Supprimer</a></td>
+						</tr>
+					</table>
+					<ul class="nav nav-pills">
+						<li th:each="page,status:${pages}">
+							<a th:class="${status.index==currentPage?'btn btn-primary':'btn' }"
+								th:href="@{ ListeMusiques(page=${status.index}, size=${size} ) }"
+								th:text="${status.index }"></a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+</body>
+
+</html>

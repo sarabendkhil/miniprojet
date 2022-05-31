@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorator="template">
+<link rel="stylesheet" type="text/css"
+href="/webjars/bootstrap/4.3.1/css/bootstrap.min.css" />
+<head>
+<meta charset="utf-8">
+<title>Ajout des Musiques</title>
+</head>
+<body>
+<div layout:fragment="Mycontent">
+<div class="container mt-5">
+<div class="card">
+<div class="card-header">
+Modifier des Musiques
+</div>
+<div class="card-body">
+<form th:action="@{saveMusique}" method="post">
+<div class="form-group">
+<label class="control-label" hidden>ID Musique :</label>
+<input type="hidden" name="idMusique" class="form-control"
+th:value="${musique.idMusique}" />
+</div>
+<div class="form-group">
+<label class="control-label">Nom Musique :</label>
+<input type="text" name="nomMusique" class="form-control"
+
+th:value="${musique.nomMusique}" />
+
+<span th:errors= ${musique.nomMusique} class="text-danger">
+
+</span>
+</div>
+<div class="form-group">
+<label class="control-label">Duree Musique :</label>
+<input type="text" name="dureeMusique" class="form-control"
+th:value="${musique.dureeMusique}" />
+<span th:errors=${musique.dureeMusique} class="text-danger">
+</span>
+</div>
+<div class="form-group">
+<label class="control-label">date Creation :</label>
+<input type="date" name="dateSortie" class="form-control"
+
+th:value="${musique.dateSortie}"/>
+
+<span th:errors=${musique.dateSortie} class="text-danger">
+
+</span>
+</div>
+
+
+
+
+<div>
+<button type="submit" class="btn btn-primary">Valider</button>
+</div>
+</form>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>
